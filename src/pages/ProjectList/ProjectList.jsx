@@ -1,4 +1,4 @@
-import ProjectCard from '@/components/ProjectCard/ProjectCard'
+import ProjectCard from '@/components/Project/ProjectCard'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -9,7 +9,7 @@ import { MagnifyingGlassIcon, MixerHorizontalIcon } from '@radix-ui/react-icons'
 
 import React, { useState } from 'react'
 
-const tags = [
+export const tags = [
     {
         value: "all",
         name: "All"

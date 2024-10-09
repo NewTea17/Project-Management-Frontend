@@ -23,7 +23,7 @@ const ProjectCard = () => {
                     </div>
                     <div className='flex flex-wrap items-center'>
                         {
-                            [1, 1, 1, 1].map((item) => (
+                            [1, 2, 3, 4].map((item) => (
                                 <Badge key={item} variant="secondary" className="mr-3">test tag</Badge>
                             ))
                         }
