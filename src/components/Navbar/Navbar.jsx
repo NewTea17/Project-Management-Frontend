@@ -4,12 +4,15 @@ import { Button } from '../ui/button'
 import CreateProjectCard from '../Project/CreateProjectCard'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { PersonIcon } from '@radix-ui/react-icons'
+import { useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
+    const navigate = useNavigate();
+
     return (
         <div className='border-b py-4 px-5 flex items-center justify-between'>
             <div className='flex items-center gap-7'>
-                <h3 className='cursor-pointer'>Jeen</h3>
+                <h3 onClick={() => navigate("/")} className='cursor-pointer'>Jeen</h3>
                 <Dialog>
                     <DialogTrigger>
                         <Button>New Project</Button>

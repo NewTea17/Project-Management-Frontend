@@ -3,15 +3,18 @@ import { Card } from '../ui/card'
 import { DotFilledIcon } from '@radix-ui/react-icons'
 import { Button } from '../ui/button'
 import { Badge } from '../ui/badge'
+import { useNavigate } from 'react-router-dom'
 
 const ProjectCard = () => {
+    const navigate = useNavigate();
+
     return (
         <Card className="p-5 w-full lg:max-w-3xl">
             <div className='space-y-5'>
                 <div className='space-y-2'>
                     <div className='flex justify-between'>
                         <div className='flex items-center gap-5'>
-                            <h3 className='cursor-pointer font-bold text-lg'>Test Project Name</h3>
+                            <h3 onClick={() => navigate("/projects/3")} className='cursor-pointer font-bold text-lg'>Test Project Name</h3>
                             <DotFilledIcon />
                             <p className='text-sm text-gray-700'>UI/UX</p>
                         </div>
