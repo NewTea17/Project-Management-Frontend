@@ -17,9 +17,11 @@ const TaskList = ({ status, title }) => {
                     </CardHeader>
                     <CardContent className="px-2">
                         <div className='space-y-2'>
-                            <TaskCard />
-                            <TaskCard />
-                            <TaskCard />
+                            {
+                                [1, 2, 3].map(task => (
+                                    <TaskCard key={task} />
+                                ))
+                            }
                         </div>
                     </CardContent>
                     <CardFooter>

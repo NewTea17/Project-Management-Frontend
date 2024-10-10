@@ -12,7 +12,7 @@ const InviteUserCard = () => {
     });
 
     const onSubmit = (data) => {
-        console.log("Createing project...", data);
+        console.log("Createing user...", data);
     }
 
     return (
