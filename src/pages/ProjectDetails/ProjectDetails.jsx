@@ -76,7 +76,9 @@ const ProjectDetail = () => {
               </section>
             </div>
           </ScrollArea>
-          <ChatBox />
+          <div className='lg:w-[30%] sticky right-5 top-10'>
+            <ChatBox />
+          </div>
         </div>
       </div>
     </div>
