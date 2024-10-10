@@ -5,13 +5,16 @@ import { Button } from '../ui/button'
 import { DotsVerticalIcon, PersonIcon } from '@radix-ui/react-icons'
 import { Avatar, AvatarFallback } from '../ui/avatar'
 import UserList from '../User/UserList'
+import { useNavigate } from 'react-router-dom'
 
 const TaskCard = () => {
+    const navigate = useNavigate();
+
     return (
         <Card className="rounded-md py-1 pb-2">
             <CardHeader className="py-0 pb-1">
                 <div className='flex items-center justify-between'>
-                    <CardTitle>Test Task Card</CardTitle>
+                    <CardTitle className="cursor-pointer" onClick={() => navigate("/projects/3/2")}>Test Task Card</CardTitle>
                     <DropdownMenu>
                         <DropdownMenuTrigger>
                             <Button className="rounded-full" size="icon" variant="ghost">
