@@ -11,9 +11,6 @@ export const signUp = (userData) => async (dispatch) => {
             localStorage.setItem("jwt", data.jwt)
             dispatch({ type: SIGNUP_SUCCESS, payload: data });
         }
-
-        console.log("Sign up success .... " + data);
-
     } catch (e) {
         console.log("Sign up error: ", e.response ? e.response.data : e.message);
     }
@@ -43,11 +40,8 @@ export const getUserProfile = () => async (dispatch) => {
                 Authorization: `Bearer ${localStorage.getItem("jwt")}`
             }
         });
-        if (data.jwt) {
-            localStorage.setItem("jwt", data.jwt)
-            dispatch({ type: GET_USER_SUCCESS, payload: data });
-        }
 
+        dispatch({ type: GET_USER_SUCCESS, payload: data });
     } catch (e) {
         console.log(e);
     }
