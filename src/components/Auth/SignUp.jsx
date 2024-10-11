@@ -19,7 +19,6 @@ const SignUp = () => {
 
     const onSubmit = (data) => {
         dispatch(signUp(data));
-        console.log("Sign up user...", data);
     }
 
     return (

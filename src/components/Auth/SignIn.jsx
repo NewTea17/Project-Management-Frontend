@@ -3,8 +3,12 @@ import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { useDispatch } from 'react-redux';
+import { signIn } from '@/Redux/authenticationApi/Action';
 
 const SignIn = () => {
+    const dispatch = useDispatch()
+
     const form = useForm({
         defaultValues: {
             email: "",
@@ -13,7 +17,7 @@ const SignIn = () => {
     });
 
     const onSubmit = (data) => {
-        console.log("Sign in user...", data);
+        dispatch(signIn(data));
     }
 
     return (
