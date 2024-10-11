@@ -9,9 +9,8 @@ import AuthPage from './pages/AuthPage/AuthPage'
 const App = () => {
   return (
     <div>
-
       {
-        true
+        false
           ?
           <div>
             <Navbar />

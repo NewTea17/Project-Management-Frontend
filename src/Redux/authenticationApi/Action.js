@@ -9,11 +9,13 @@ export const signUp = (userData) => async (dispatch) => {
         const { data } = await axios.post(`${url}/auth/sign-up`, userData);
         if (data.jwt) {
             localStorage.setItem("jwt", data.jwt)
-            dispatch({ type: SIGNUP_SUCCESS, payload:data });
+            dispatch({ type: SIGNUP_SUCCESS, payload: data });
         }
 
+        console.log("Sign up success .... " + data);
+
     } catch (e) {
-        console.log(e);
+        console.log("Sign up error: ", e.response ? e.response.data : e.message);
     }
 }
 
@@ -24,7 +26,7 @@ export const signIn = (userData) => async (dispatch) => {
         const { data } = await axios.post(`${url}/auth/sign-in`, userData);
         if (data.jwt) {
             localStorage.setItem("jwt", data.jwt)
-            dispatch({ type: SIGNIN_SUCCESS, payload:data });
+            dispatch({ type: SIGNIN_SUCCESS, payload: data });
         }
 
     } catch (e) {
@@ -38,12 +40,12 @@ export const getUserProfile = () => async (dispatch) => {
     try {
         const { data } = await axios.get(`${url}/api/users/profile`, {
             headers: {
-                "Authorization": `Bearer ${localStorage.getItem("jwt")}`
+                Authorization: `Bearer ${localStorage.getItem("jwt")}`
             }
         });
         if (data.jwt) {
             localStorage.setItem("jwt", data.jwt)
-            dispatch({ type: GET_USER_SUCCESS, payload:data });
+            dispatch({ type: GET_USER_SUCCESS, payload: data });
         }
 
     } catch (e) {

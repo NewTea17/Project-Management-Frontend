@@ -3,8 +3,12 @@ import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { useDispatch } from 'react-redux';
+import { signUp } from '@/Redux/authenticationApi/Action';
 
 const SignUp = () => {
+    const dispatch = useDispatch()
+
     const form = useForm({
         defaultValues: {
             fullName: "",
@@ -14,6 +18,7 @@ const SignUp = () => {
     });
 
     const onSubmit = (data) => {
+        dispatch(signUp(data));
         console.log("Sign up user...", data);
     }
 
