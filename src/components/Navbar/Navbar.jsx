@@ -5,9 +5,17 @@ import CreateProjectCard from '../Project/CreateProjectCard'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { PersonIcon } from '@radix-ui/react-icons'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '@/Redux/authenticationApi/Action'
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { auth } = useSelector(store => store);
+
+    const onLogout = () => {
+        dispatch(logout());
+    }
 
     return (
         <div className='border-b py-4 px-5 flex items-center justify-between'>
@@ -31,13 +39,13 @@ const Navbar = () => {
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={onLogout}>
                             Logout
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
 
-                <h3>test user</h3>
+                <h3>{auth.user.fullName}</h3>
             </div>
         </div>
     )

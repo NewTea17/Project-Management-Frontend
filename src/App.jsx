@@ -15,7 +15,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getUserProfile());
-  }, []);
+  }, [auth.jwt]);
 
   return (
     <div>
