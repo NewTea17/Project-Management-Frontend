@@ -5,9 +5,11 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { getAllProjects, searchProjects } from '@/Redux/projectApi/Action'
 import { MagnifyingGlassIcon, MixerHorizontalIcon } from '@radix-ui/react-icons'
 
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 export const tags = [
     {
@@ -65,14 +67,33 @@ export const tags = [
 ]
 
 const ProjectList = () => {
+    const dispatch = useDispatch();
+    const { project } = useSelector(store => store);
     const [keyword, setKeyword] = useState("");
 
-    const handleFilterChange = (section, value) => {
-        console.log(section + " " + value);
+    const onCategoryChange = (value) => {
+        if (value == "all") {
+            dispatch(getAllProjects({}));
+            return;
+        } else {
+            dispatch(getAllProjects({ category: value }));
+        }
+    }
+
+    const onTagsChange = (value) => {
+        if (value == "all") {
+            dispatch(getAllProjects({}));
+        } else {
+            const selectedTag = tags.find(tag => tag.value === value);
+            if (selectedTag) {
+                dispatch(getAllProjects({ tag: selectedTag.value })); 
+            }
+        }
     }
 
     const handleSearchProject = (e) => {
         setKeyword(e.target.value);
+        dispatch(searchProjects(e.target.value));
     }
 
     return (
@@ -91,7 +112,7 @@ const ProjectList = () => {
                                 <div>
                                     <h1 className='pb-3 text-gray-700 border-b'>Category</h1>
                                     <div className='pt-5'>
-                                        <RadioGroup className="space-y-3 pt-5" defaultValue='all' onValueChange={(value) => { handleFilterChange("category", value) }}>
+                                        <RadioGroup className="space-y-3 pt-5" defaultValue='all' onValueChange={(value) => { onCategoryChange(value) }}>
                                             <div className='flex items-center space-x-2 gap-3'>
                                                 <RadioGroupItem value='all' id='v1' />
                                                 <Label htmlFor="v1">All</Label>
@@ -119,12 +140,12 @@ const ProjectList = () => {
                                 <div className='pt-10'>
                                     <h1 className='pb-3 text-gray-700 border-b'>Tags</h1>
                                     <div className='pt-5'>
-                                        <RadioGroup className="space-y-3 pt-5" defaultValue='all' onValueChange={(value) => { handleFilterChange("tag", value) }}>
+                                        <RadioGroup className="space-y-3 pt-5" defaultValue='all' onValueChange={(value) => { onTagsChange(value); console.log(value) }}>
                                             {
-                                                tags.map(tagItem => (
+                                                tags.map(tag => (
                                                     <div className='flex items-center space-x-2 gap-3'>
-                                                        <RadioGroupItem value={tagItem.value} id={`v1-${tagItem.value}`} />
-                                                        <Label htmlFor={`v1-${tagItem.value}`}>{tagItem.name}</Label>
+                                                        <RadioGroupItem value={tag.value} id={`v1-${tag.value}`} />
+                                                        <Label htmlFor={`v1-${tag.value}`}>{tag.name}</Label>
                                                     </div>
                                                 ))
                                             }
@@ -145,12 +166,15 @@ const ProjectList = () => {
                     <div>
                         <div className='space-y-5 min-h-[74vh]'>
                             {
-                                !keyword ? [1, 1, 1].map(item => (
-                                    <ProjectCard key={item} />
-                                )) :
-                                [1, 1, 1, 1].map(item => (
-                                    <ProjectCard key={item} />
-                                ))
+                                !keyword
+                                    ?
+                                    project.projects?.map((project, index) => (
+                                        <ProjectCard key={project.id * index} project={project} />
+                                    ))
+                                    :
+                                    project.searchProjects?.map(project => (
+                                        <ProjectCard key={project.id} project={project} />
+                                    ))
                             }
                         </div>
                     </div>

@@ -4,9 +4,16 @@ import { DotFilledIcon } from '@radix-ui/react-icons'
 import { Button } from '../ui/button'
 import { Badge } from '../ui/badge'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { deleteProject } from '@/Redux/projectApi/Action'
 
-const ProjectCard = () => {
+const ProjectCard = ({ project }) => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const onDelete = () => {
+        dispatch(deleteProject(project.id));
+    }
 
     return (
         <Card className="p-5 w-full lg:max-w-3xl">
@@ -14,26 +21,26 @@ const ProjectCard = () => {
                 <div className='space-y-2'>
                     <div className='flex justify-between'>
                         <div className='flex items-center gap-5'>
-                            <h3 onClick={() => navigate("/projects/3")} className='cursor-pointer font-bold text-lg'>Test Project Name</h3>
+                            <h3 onClick={() => navigate("/projects/3")} className='cursor-pointer font-bold text-lg'>{project.name}</h3>
                             <DotFilledIcon />
-                            <p className='text-sm text-gray-700'>UI/UX</p>
+                            <p className='text-sm text-gray-700'>{project.category}</p>
                         </div>
                     </div>
                     <div>
                         <p className='mb-3 text-sm text-gray-800'>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                        {project.description}
                         </p>
                     </div>
                     <div className='flex flex-wrap items-center'>
                         {
-                            [1, 2, 3, 4].map((item) => (
-                                <Badge key={item} variant="secondary" className="mr-3">test tag</Badge>
+                            project.tags.map((tag) => (
+                                <Badge key={tag} variant="secondary" className="mr-3">{tag}</Badge>
                             ))
                         }
                     </div>
                     <div>
                         <Button size="sm" className="mr-5 mt-3">Update</Button>
-                        <Button size="sm" variant="destructive">Delete</Button>
+                        <Button size="sm" variant="destructive" onClick={onDelete}>Delete</Button>
                     </div>
                 </div>
             </div>

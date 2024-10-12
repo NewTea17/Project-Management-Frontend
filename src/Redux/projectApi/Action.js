@@ -5,12 +5,12 @@ import { ACCEPT_INVITATION_REQUEST, ACCEPT_INVITATION_SUCCESS, CREATE_PROJECT_RE
     PROJECT_BY_ID_SUCCESS, PROJECTS_REQUEST, PROJECTS_SUCCESS, SEARCH_PROJECTS_REQUEST, 
     SEARCH_PROJECTS_SUCCESS } from "./ActionTypes";
 
-export const getAllProjects = ({ category, tags }) => async (dispatch) => {
+export const getAllProjects = ({ category, tag }) => async (dispatch) => {
     dispatch({ type: PROJECTS_REQUEST });
 
     try {
         const { data } = await api.get(`/api/projects`, {
-            params: { category, tags }
+            params: { category, tag }
         });
 
         dispatch({ type: PROJECTS_SUCCESS, projects: data });
@@ -52,7 +52,7 @@ export const createProject = (projectData) => async (dispatch) => {
     }
 }
 
-export const deleteProject = ({id}) => async (dispatch) => {
+export const deleteProject = (id) => async (dispatch) => {
     dispatch({ type: DELETE_PROJECT_BY_ID_REQUEST });
 
     try {

@@ -7,8 +7,13 @@ import { Button } from '../ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { tags } from '@/pages/ProjectList/ProjectList';
 import { Cross1Icon } from '@radix-ui/react-icons';
+import { useDispatch } from 'react-redux';
+import { store } from '@/Redux/Store';
+import { createProject } from '@/Redux/projectApi/Action';
 
 const CreateProjectCard = () => {
+    const dispatch = useDispatch();
+
     const form = useForm({
         defaultValues: {
             name: "",
@@ -19,6 +24,7 @@ const CreateProjectCard = () => {
     });
 
     const onSubmit = (data) => {
+        dispatch(createProject(data));
         console.log("Createing project...", data);
     }
 
@@ -66,7 +72,7 @@ const CreateProjectCard = () => {
                                     <Select
                                         defaultValue='Fullstack'
                                         value={field.value}
-                                        onValueChange={handleTagsChange}
+                                        onValueChange={(value) => field.onChange(value)}
                                     >
                                         <SelectTrigger className="w-full">
                                             <SelectValue placeholder="Category" />

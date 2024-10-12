@@ -8,6 +8,7 @@ import AuthPage from './pages/AuthPage/AuthPage'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserProfile } from './Redux/authenticationApi/Action'
 import { store } from './Redux/Store'
+import { getAllProjects } from './Redux/projectApi/Action'
 
 const App = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getUserProfile());
+    dispatch(getAllProjects({}));
   }, [auth.jwt]);
 
   return (
