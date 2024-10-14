@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '../ui/dialog'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card'
 import TaskCard from './TaskCard'
@@ -6,8 +6,20 @@ import { Button } from '../ui/button'
 import { PlusIcon } from 'lucide-react'
 import { DialogTitle } from '@radix-ui/react-dialog'
 import AddTaskCard from './AddTaskCard'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllTasksByProjectId } from '@/Redux/taskApi/Action'
+import { useParams } from 'react-router-dom'
+import { store } from '@/Redux/Store'
 
 const TaskList = ({ status, title }) => {
+    const dispatch = useDispatch();
+    const { task } = useSelector(store => store);
+    const { id } = useParams();
+
+    useEffect(() => {
+        dispatch(getAllTasksByProjectId(id));
+    }, [id]);
+
     return (
         <div>
             <Dialog>
@@ -18,8 +30,8 @@ const TaskList = ({ status, title }) => {
                     <CardContent className="px-2">
                         <div className='space-y-2'>
                             {
-                                [1, 2, 3].map(task => (
-                                    <TaskCard key={task} />
+                                task.tasks.filter(task => task.status === status).map(task => (
+                                    <TaskCard key={task.id} projectId={id} task={task} />
                                 ))
                             }
                         </div>
@@ -37,7 +49,7 @@ const TaskList = ({ status, title }) => {
                     <DialogHeader>
                         <DialogTitle>Add New Task</DialogTitle>
                     </DialogHeader>
-                    <AddTaskCard />
+                    <AddTaskCard status={status} />
                 </DialogContent>
             </Dialog>
         </div>

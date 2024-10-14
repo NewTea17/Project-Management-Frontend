@@ -25,7 +25,6 @@ const CreateProjectCard = () => {
 
     const onSubmit = (data) => {
         dispatch(createProject(data));
-        console.log("Createing project...", data);
     }
 
     const handleTagsChange = (item) => {

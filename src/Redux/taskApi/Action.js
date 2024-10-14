@@ -8,6 +8,7 @@ export const getAllTasksByProjectId = (id) => async (dispatch) => {
     try {
         const { data } = await api.get(`/api/tasks/project/${id}`);
         dispatch({ type: TASKS_SUCCESS, tasks: data });
+        console.log(data);
     } catch (e) {
         console.log(e);
     }

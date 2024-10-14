@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Card } from '../ui/card'
 import { DotFilledIcon } from '@radix-ui/react-icons'
 import { Button } from '../ui/button'
 import { Badge } from '../ui/badge'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { deleteProject } from '@/Redux/projectApi/Action'
+import { deleteProject, getProjectById } from '@/Redux/projectApi/Action'
 
 const ProjectCard = ({ project }) => {
     const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const ProjectCard = ({ project }) => {
                 <div className='space-y-2'>
                     <div className='flex justify-between'>
                         <div className='flex items-center gap-5'>
-                            <h3 onClick={() => navigate("/projects/3")} className='cursor-pointer font-bold text-lg'>{project.name}</h3>
+                            <h3 onClick={() => navigate("/projects/" + project.id)} className='cursor-pointer font-bold text-lg'>{project.name}</h3>
                             <DotFilledIcon />
                             <p className='text-sm text-gray-700'>{project.category}</p>
                         </div>

@@ -140,7 +140,7 @@ const ProjectList = () => {
                                 <div className='pt-10'>
                                     <h1 className='pb-3 text-gray-700 border-b'>Tags</h1>
                                     <div className='pt-5'>
-                                        <RadioGroup className="space-y-3 pt-5" defaultValue='all' onValueChange={(value) => { onTagsChange(value); console.log(value) }}>
+                                        <RadioGroup className="space-y-3 pt-5" defaultValue='all' onValueChange={(value) => { onTagsChange(value) }}>
                                             {
                                                 tags.map(tag => (
                                                     <div className='flex items-center space-x-2 gap-3'>

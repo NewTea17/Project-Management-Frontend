@@ -6,15 +6,23 @@ import { DotsVerticalIcon, PersonIcon } from '@radix-ui/react-icons'
 import { Avatar, AvatarFallback } from '../ui/avatar'
 import UserList from '../User/UserList'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { store } from '@/Redux/Store'
+import { deleteTask } from '@/Redux/taskApi/Action'
 
-const TaskCard = () => {
+const TaskCard = ({ projectId, task }) => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const onTaskDelete = () => {
+        dispatch(deleteTask(task.id));
+    }
 
     return (
         <Card className="rounded-md py-1 pb-2">
             <CardHeader className="py-0 pb-1">
                 <div className='flex items-center justify-between'>
-                    <CardTitle className="cursor-pointer" onClick={() => navigate("/projects/3/2")}>Test Task Card</CardTitle>
+                    <CardTitle className="cursor-pointer" onClick={() => navigate(`/projects/${projectId}/${task.id}`)}>{task.title}</CardTitle>
                     <DropdownMenu>
                         <DropdownMenuTrigger>
                             <Button className="rounded-full" size="icon" variant="ghost">
@@ -25,7 +33,7 @@ const TaskCard = () => {
                             <DropdownMenuItem>In Progress</DropdownMenuItem>
                             <DropdownMenuItem>Done</DropdownMenuItem>
                             <DropdownMenuItem>Edit</DropdownMenuItem>
-                            <DropdownMenuItem>Delete</DropdownMenuItem>
+                            <DropdownMenuItem onClick={onTaskDelete}>Delete</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

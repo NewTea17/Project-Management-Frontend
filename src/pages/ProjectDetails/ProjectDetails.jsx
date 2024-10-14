@@ -6,13 +6,26 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import InviteUserCard from '@/components/User/InviteUserCard'
+import { getProjectById } from '@/Redux/projectApi/Action'
+import { store } from '@/Redux/Store'
 import { PlusIcon } from '@radix-ui/react-icons'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 const ProjectDetail = () => {
+  const dispatch = useDispatch();
+  const { project } = useSelector(store => store);
+
+  const { id } = useParams();
+
   const handleProjectInvitation = (e) => {
 
   }
+
+  useEffect(() => {
+    dispatch(getProjectById(id));
+  }, [id])
 
   return (
     <div>
@@ -20,22 +33,22 @@ const ProjectDetail = () => {
         <div className='lg:flex gap-5 justify-between pb-4'>
           <ScrollArea className="h-screen lg:w-[70%] pr-2">
             <div className='pb-5 w-full'>
-              <h1 className='text-lg pb-2'>Test Project Name</h1>
+              <h1 className='text-lg pb-2'>{project.projectDetails?.name}</h1>
               <div className='space-y-5 pb-10'>
                 <p className='w-full md:max-w-lg lg:max-w-xl'>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  {project.projectDetails?.description}
                 </p>
                 <div className='flex'>
                   <p className='w-44'>Creator: </p>
-                  <p>test user</p>
+                  <p>{project.projectDetails?.owner.fullName}</p>
                 </div>
                 <div className='flex'>
                   <p className='w-44'>Members: </p>
                   <div className='flex items-center gap-2'>
                     {
-                      [1, 2, 3].map(item => (
-                        <Avatar className="cursor-pointer" key={item}>
-                          <AvatarFallback>T</AvatarFallback>
+                      project.projectDetails?.team.map(user => (
+                        <Avatar className="cursor-pointer" key={user}>
+                          <AvatarFallback>{user.fullName[0].toUpperCase()}</AvatarFallback>
                         </Avatar>
                       ))
                     }
@@ -59,12 +72,12 @@ const ProjectDetail = () => {
                 </div>
                 <div className='flex'>
                   <p className='w-44'>Category: </p>
-                  <p>UI/UX</p>
+                  <p>{project.projectDetails?.category}</p>
                 </div>
-                <div className='flex'>
+                {/* <div className='flex'>
                   <p className='w-44'>Status: </p>
-                  <Badge>In progress</Badge>
-                </div>
+                  <Badge>{project.projectDetails.status}</Badge>
+                </div> */}
               </div>
               <section>
                 <p className='py-5 border-b text-lg -tracking-wider'>Tasks</p>
