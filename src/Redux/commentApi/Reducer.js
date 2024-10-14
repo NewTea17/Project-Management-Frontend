@@ -18,7 +18,7 @@ export const commentReducer = (state = initialState, action) => {
             return { ...state, loading: false, comments: [...state.comments, action.comment] }
 
         case DELETE_COMMENT_SUCCESS:
-            return { ...state, loading: false, comments: state.comments.filter(comment => comment.id !== action.commentId) };
+            return { ...state, loading: false, comments: state.comments.filter(comment => comment.id !== action.id) };
 
         case GET_COMMENTS_SUCCESS:
             return { ...state, loading: false, comments: action.comments };

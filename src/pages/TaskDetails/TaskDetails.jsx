@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { getAllCommentsByTaskId } from '@/Redux/commentApi/Action';
 import { getTaskById, updateTaskStatus } from '@/Redux/taskApi/Action';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,11 +14,12 @@ import { useParams } from 'react-router-dom'
 
 const TaskDetails = () => {
     const dispatch = useDispatch();
-    const { task } = useSelector(store => store);
+    const { task, comment } = useSelector(store => store);
     const { projectId, taskId } = useParams();
 
     useEffect(() => {
         dispatch(getTaskById(taskId));
+        dispatch(getAllCommentsByTaskId(taskId));
     }, [taskId])
 
     const onUpdateTaskStatus = (status) => {
@@ -56,11 +58,11 @@ const TaskDetails = () => {
                             <TabsContent value="comments">
                                 <CreateCommentCard taskId={taskId} />
                                 <div className='mt-8 space-y-6'>
-                                    {/* {
-                                        task.taskDetails.comments.map((comment) => (
-                                            <CommentCard key={comment.id} />
+                                    {
+                                        comment.comments.map((item) => (
+                                            <CommentCard item={item} key={item.id} />
                                         ))
-                                    } */}
+                                    }
                                 </div>
                             </TabsContent>
                             <TabsContent value="history">

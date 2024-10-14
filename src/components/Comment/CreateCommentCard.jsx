@@ -4,8 +4,12 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { Avatar, AvatarFallback } from '../ui/avatar';
+import { useDispatch } from 'react-redux';
+import { createComment } from '@/Redux/commentApi/Action';
 
 const CreateCommentCard = ({ taskId }) => {
+    const dispatch = useDispatch();
+
     const form = useForm({
         defaultValues: {
             content: ""
@@ -13,7 +17,10 @@ const CreateCommentCard = ({ taskId }) => {
     });
 
     const onSubmit = (data) => {
-        console.log("Createing comment...", data);
+        dispatch(createComment({
+            comment: data.content,
+            taskId: taskId
+        }));
     }
 
     return (
