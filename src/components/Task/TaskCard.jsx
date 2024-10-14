@@ -52,7 +52,7 @@ const TaskCard = ({ projectId, task }) => {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                            <UserList />
+                            <UserList taskDetails={task} />
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

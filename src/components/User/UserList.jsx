@@ -1,24 +1,35 @@
 import React from 'react'
 import { Avatar, AvatarFallback } from '../ui/avatar'
+import { useDispatch, useSelector } from 'react-redux'
+import { store } from '@/Redux/Store'
+import { assigneeUserToTask, getTaskById } from '@/Redux/taskApi/Action'
 
-const UserList = () => {
+const UserList = ({ taskDetails }) => {
+  const dispatch = useDispatch();
+  const { project } = useSelector(store => store);
+
+  const setAssigneeOfTask = (userId) => {
+    dispatch(assigneeUserToTask({ taskId: taskDetails?.id, userId: userId }));
+  }
+
   return (
     <div>
       <div className='space-y-2'>
         <div className='border'>
-          <h3 className='py-2 px-3'>{"Test user" || "Unresolved"}</h3>
+          <h3 className='py-2 px-3'>{taskDetails?.assignee?.fullName || "Unresolved"}</h3>
         </div>
         {
-          [1, 2, 3, 4].map(user => (
-            <div className='py-2 hover:text-gray-400 cursor-pointer flex items-center'>
+          project.projectDetails?.team.map(user => (
+            <div key={user.id} className='py-2 hover:text-gray-400 cursor-pointer flex items-center'
+              onClick={() => { setAssigneeOfTask(user.id); console.log(taskDetails) }}>
               <Avatar className="mr-4">
                 <AvatarFallback>
-                  T
+                  {user.fullName[0].toUpperCase()}
                 </AvatarFallback>
               </Avatar>
               <div className='space-y-1'>
-                <h4 className='text-sm'>Test user</h4>
-                <h4 className='text-sm text-muted-foreground'>@testuser</h4>
+                <h4 className='text-sm'>{user.fullName}</h4>
+                <h4 className='text-sm text-muted-foreground'>{user.email}</h4>
               </div>
             </div>
           ))

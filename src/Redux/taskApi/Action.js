@@ -58,7 +58,7 @@ export const updateTaskStatus = ({id, status}) => async (dispatch) => {
     }
 }
 
-export const asigneeUserToTask = ({taskId, userId}) => async (dispatch) => {
+export const assigneeUserToTask = ({taskId, userId}) => async (dispatch) => {
     dispatch({ type: ASSIGNEE_TASK_TO_USER_REQUEST });
 
     try {

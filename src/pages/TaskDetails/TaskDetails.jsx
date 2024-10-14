@@ -6,14 +6,22 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import React from 'react'
+import { getTaskById, updateTaskStatus } from '@/Redux/taskApi/Action';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 
 const TaskDetails = () => {
+    const dispatch = useDispatch();
+    const { task } = useSelector(store => store);
     const { projectId, taskId } = useParams();
 
-    const handleChangeTaskStatus =(e) => {
+    useEffect(() => {
+        dispatch(getTaskById(taskId));
+    }, [taskId])
 
+    const onUpdateTaskStatus = (status) => {
+        dispatch(updateTaskStatus({ id: taskId, status }));
     }
 
     return (
@@ -21,11 +29,11 @@ const TaskDetails = () => {
             <div className='flex justify-between border p-10 rounded-lg gap-7'>
                 <ScrollArea className="h-[70vh] w-[45%]">
                     <div>
-                        <h1 className='text-lg pb-2'>Test task</h1>
+                        <h1 className='text-lg pb-2'>{task.taskDetails?.title}</h1>
                     </div>
                     <div>
                         <p className='w-full md:max-w-lg lg:max-w-xl'>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            {task.taskDetails?.description}
                         </p>
                     </div>
                     <div className='mt-5'>
@@ -48,11 +56,11 @@ const TaskDetails = () => {
                             <TabsContent value="comments">
                                 <CreateCommentCard taskId={taskId} />
                                 <div className='mt-8 space-y-6'>
-                                    {
-                                        [1, 2, 3, 4, 5, 6].map((comment) => (
-                                            <CommentCard key={comment} />
+                                    {/* {
+                                        task.taskDetails.comments.map((comment) => (
+                                            <CommentCard key={comment.id} />
                                         ))
-                                    }
+                                    } */}
                                 </div>
                             </TabsContent>
                             <TabsContent value="history">
@@ -63,7 +71,7 @@ const TaskDetails = () => {
                 </ScrollArea>
                 <div className='w-full lg:w-[55%] space-y-2'>
                     <Select
-                        onValueChange={handleChangeTaskStatus}
+                        onValueChange={onUpdateTaskStatus}
                     >
                         <SelectTrigger className="w-[20rem]">
                             <SelectValue placeholder="Status" />
@@ -81,10 +89,18 @@ const TaskDetails = () => {
                                 <div className='flex items-center gap-7'>
                                     <h3 className='w-[20rem]'>Assignee</h3>
                                     <div className='flex items-center gap-3'>
-                                        <Avatar>
-                                            <AvatarFallback>T</AvatarFallback>
-                                        </Avatar>
-                                        <h4>Test User</h4>
+                                        {
+                                            task.taskDetails?.assignee?.fullName
+                                                ?
+                                                <>
+                                                    <Avatar>
+                                                        <AvatarFallback>{task.taskDetails?.assignee?.fullName[0].toUpperCase()}</AvatarFallback>
+                                                    </Avatar>
+                                                    <h4>{task.taskDetails?.assignee?.fullName}</h4>
+                                                </>
+                                                :
+                                                "None"
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +121,7 @@ const TaskDetails = () => {
                                     <h3 className='w-[20rem]'>Status</h3>
                                     <div className='flex items-center gap-3'>
                                         <Badge>
-                                            Done
+                                            {task.taskDetails?.status}
                                         </Badge>
                                     </div>
                                 </div>
@@ -116,7 +132,7 @@ const TaskDetails = () => {
                                 <div className='flex items-center gap-7'>
                                     <h3 className='w-[20rem]'>Due Date</h3>
                                     <div className='flex items-center gap-3'>
-                                        <h4>13/10/2024</h4>
+                                        <h4>{task.taskDetails?.dueDate}</h4>
                                     </div>
                                 </div>
                             </div>
