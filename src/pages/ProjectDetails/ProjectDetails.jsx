@@ -20,7 +20,7 @@ const ProjectDetail = () => {
   const { id } = useParams();
 
   const handleProjectInvitation = (e) => {
-
+    console.log(project);
   }
 
   useEffect(() => {
@@ -65,7 +65,7 @@ const ProjectDetail = () => {
                     <DialogContent>
                       <DialogHeader>
                         Invite User
-                        <InviteUserCard />
+                        <InviteUserCard projectId={project.projectDetails?.id} />
                       </DialogHeader>
                     </DialogContent>
                   </Dialog>

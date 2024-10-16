@@ -3,8 +3,12 @@ import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
+import { useDispatch } from 'react-redux';
+import { inviteToProject } from '@/Redux/projectApi/Action';
+import { DialogClose } from '@radix-ui/react-dialog';
 
-const InviteUserCard = () => {
+const InviteUserCard = ({ projectId }) => {
+    const dispatch = useDispatch();
     const form = useForm({
         defaultValues: {
             email: "",
@@ -12,7 +16,7 @@ const InviteUserCard = () => {
     });
 
     const onSubmit = (data) => {
-        console.log("Createing user...", data);
+        dispatch(inviteToProject({ email: data.email, projectId }));
     }
 
     return (
@@ -32,7 +36,9 @@ const InviteUserCard = () => {
                         )}
                     />
 
-                    <Button type="submit" className="w-full px-10 my-5">Invite</Button>
+                    <DialogClose>
+                        <Button type="submit" className="w-full px-10 my-5">Invite</Button>
+                    </DialogClose>
                 </form>
             </Form>
         </div>
