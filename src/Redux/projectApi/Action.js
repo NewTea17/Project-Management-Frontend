@@ -1,9 +1,11 @@
 import api, { url } from "@/config/constants";
-import { ACCEPT_INVITATION_REQUEST, ACCEPT_INVITATION_SUCCESS, CREATE_PROJECT_REQUEST, 
-    CREATE_PROJECT_SUCCESS, DELETE_PROJECT_BY_ID_REQUEST, DELETE_PROJECT_BY_ID_SUCCESS, 
-    INVITE_TO_PROJECT_REQUEST, INVITE_TO_PROJECT_SUCCESS, PROJECT_BY_ID_REQUEST, 
-    PROJECT_BY_ID_SUCCESS, PROJECTS_REQUEST, PROJECTS_SUCCESS, SEARCH_PROJECTS_REQUEST, 
-    SEARCH_PROJECTS_SUCCESS } from "./ActionTypes";
+import {
+    ACCEPT_INVITATION_REQUEST, ACCEPT_INVITATION_SUCCESS, CREATE_PROJECT_REQUEST,
+    CREATE_PROJECT_SUCCESS, DELETE_PROJECT_BY_ID_REQUEST, DELETE_PROJECT_BY_ID_SUCCESS,
+    INVITE_TO_PROJECT_REQUEST, INVITE_TO_PROJECT_SUCCESS, PROJECT_BY_ID_REQUEST,
+    PROJECT_BY_ID_SUCCESS, PROJECTS_REQUEST, PROJECTS_SUCCESS, SEARCH_PROJECTS_REQUEST,
+    SEARCH_PROJECTS_SUCCESS
+} from "./ActionTypes";
 
 export const getAllProjects = ({ category, tag }) => async (dispatch) => {
     dispatch({ type: PROJECTS_REQUEST });
@@ -43,7 +45,7 @@ export const searchProjects = (keyword) => async (dispatch) => {
 
 export const createProject = (projectData) => async (dispatch) => {
     dispatch({ type: CREATE_PROJECT_REQUEST });
-
+    
     try {
         const { data } = await api.post(`/api/projects`, projectData);
         dispatch({ type: CREATE_PROJECT_SUCCESS, project: data });
@@ -63,26 +65,29 @@ export const deleteProject = (id) => async (dispatch) => {
     }
 }
 
-export const inviteToProject = ({email, id}) => async (dispatch) => {
+export const inviteToProject = ({ email, projectId }) => async (dispatch) => {
     dispatch({ type: INVITE_TO_PROJECT_REQUEST });
 
     try {
         const { data } = await api.post(`/api/projects/invite`, {
-            email, id
+            email, projectId: projectId
         });
+
         dispatch({ type: INVITE_TO_PROJECT_SUCCESS, payload: data });
     } catch (e) {
         console.log(e);
     }
 }
 
-export const acceptInvitation = ({token, navigate}) => async (dispatch) => {
+export const acceptInvitation = ({ token, navigate }) => async (dispatch) => {
     dispatch({ type: ACCEPT_INVITATION_REQUEST });
 
     try {
-        const { data } = await api.get(`/api/projects/accept_invitation`, {token: token, });
+        const { data } = await api.get("/api/projects/accept_invitation", {
+            params: { token }
+        });
 
-        navigate("/project" + data.projectId);
+        navigate("/projects/" + data.projectId);
 
         dispatch({ type: ACCEPT_INVITATION_SUCCESS, payload: data });
     } catch (e) {

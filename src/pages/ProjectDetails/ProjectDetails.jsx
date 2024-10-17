@@ -65,7 +65,7 @@ const ProjectDetail = () => {
                     <DialogContent>
                       <DialogHeader>
                         Invite User
-                        <InviteUserCard projectId={project.projectDetails?.id} />
+                        <InviteUserCard />
                       </DialogHeader>
                     </DialogContent>
                   </Dialog>

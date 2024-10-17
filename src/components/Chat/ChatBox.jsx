@@ -28,10 +28,7 @@ const ChatBox = () => {
 
   useEffect(() => {
     dispatch(getChatByProjectId(id));
-  }, [])
-
-  useEffect(() => {
-    dispatch(getChatMessages(chat.chat?.id));
+    dispatch(getChatMessages(id));
   }, [])
 
   return (
@@ -40,9 +37,9 @@ const ChatBox = () => {
         <h1 className='border-b p-5'>Chat</h1>
         <ScrollArea className="h-[70vh] w-full p-5 flex gap-2 flex-col">
           {
-            chat.messages?.map((message, index) => (
+            chat.messages?.map((message) => (
               message.sender?.id != auth.user?.id ?
-                <div key={message} className='flex gap-2 mb-2 rounded-full justify-start'>
+                <div key={message.id} className='flex gap-2 mb-2 rounded-full justify-start'>
                   <Avatar>
                     <AvatarFallback>{message.sender?.fullName[0].toUpperCase()}</AvatarFallback>
                   </Avatar>

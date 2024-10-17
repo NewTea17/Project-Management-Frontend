@@ -6,9 +6,11 @@ import { Input } from '../ui/input';
 import { useDispatch } from 'react-redux';
 import { inviteToProject } from '@/Redux/projectApi/Action';
 import { DialogClose } from '@radix-ui/react-dialog';
+import { useParams } from 'react-router-dom';
 
-const InviteUserCard = ({ projectId }) => {
+const InviteUserCard = () => {
     const dispatch = useDispatch();
+    const { id } = useParams();
     const form = useForm({
         defaultValues: {
             email: "",
@@ -16,7 +18,7 @@ const InviteUserCard = ({ projectId }) => {
     });
 
     const onSubmit = (data) => {
-        dispatch(inviteToProject({ email: data.email, projectId }));
+        dispatch(inviteToProject({ email: data.email, projectId: id }));
     }
 
     return (

@@ -9,7 +9,6 @@ export const sendMessage = (messageData) => async (dispatch) => {
     try {
         const { data } = await api.post("/api/messages/send", messageData);
         dispatch({ type: SEND_MESSAGES_SUCCESS, message: data });
-        console.log(data);
     } catch (e) {
         console.log(e);
     }

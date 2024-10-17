@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getUserProfile } from './Redux/authenticationApi/Action'
 import { store } from './Redux/Store'
 import { getAllProjects } from './Redux/projectApi/Action'
+import AcceptInvitation from './components/AcceptInvitation/AcceptInvitation'
 
 const App = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const App = () => {
               <Route path='/projects' element={<Home />} />
               <Route path='/projects/:id' element={<ProjectDetails />} />
               <Route path='/projects/:projectId/:taskId' element={<TaskDetails />} />
+              <Route path='/accept_invitation' element={<AcceptInvitation />} />
             </Routes>
           </div>
           :
