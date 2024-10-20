@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { store } from '@/Redux/Store'
 import { assigneeUserToTask, getTaskById } from '@/Redux/taskApi/Action'
 
-const UserList = ({ taskDetails }) => {
+const UserList = ({ taskDetails, isCreator }) => {
   const dispatch = useDispatch();
   const { project } = useSelector(store => store);
 
   const setAssigneeOfTask = (userId) => {
-    dispatch(assigneeUserToTask({ taskId: taskDetails?.id, userId: userId }));
+    if(isCreator) {
+      dispatch(assigneeUserToTask({ taskId: taskDetails?.id, userId: userId }));
+    }
   }
 
   return (

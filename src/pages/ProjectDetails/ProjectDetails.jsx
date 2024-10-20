@@ -9,15 +9,16 @@ import InviteUserCard from '@/components/User/InviteUserCard'
 import { getProjectById } from '@/Redux/projectApi/Action'
 import { store } from '@/Redux/Store'
 import { PlusIcon } from '@radix-ui/react-icons'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
 const ProjectDetail = () => {
   const dispatch = useDispatch();
-  const { project } = useSelector(store => store);
+  const { auth, project } = useSelector(store => store);
 
   const { id } = useParams();
+  const [isCreator, setIsCreator] = useState(false);
 
   const handleProjectInvitation = (e) => {
     console.log(project);
@@ -26,6 +27,12 @@ const ProjectDetail = () => {
   useEffect(() => {
     dispatch(getProjectById(id));
   }, [id])
+
+  useEffect(() => {
+    if (project.projectDetails?.owner?.id === auth.currentUser?.id) {
+      setIsCreator(true);
+    }
+  }, [project, auth])
 
   return (
     <div>
@@ -53,38 +60,39 @@ const ProjectDetail = () => {
                       ))
                     }
                   </div>
-                  <Dialog>
-                    <DialogTrigger>
-                      <DialogClose>
-                        <Button size="sm" className="ml-6" onClick={handleProjectInvitation}>
-                          <span>invite</span>
-                          <PlusIcon className='w-3 h-3' />
-                        </Button>
-                      </DialogClose>
-                    </DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        Invite User
-                        <InviteUserCard />
-                      </DialogHeader>
-                    </DialogContent>
-                  </Dialog>
+                  {
+                    isCreator ?
+                      <Dialog>
+                        <DialogTrigger>
+                          <DialogClose>
+                            <Button size="sm" className="ml-6" onClick={handleProjectInvitation}>
+                              <span>invite</span>
+                              <PlusIcon className='w-3 h-3' />
+                            </Button>
+                          </DialogClose>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            Invite User
+                            <InviteUserCard />
+                          </DialogHeader>
+                        </DialogContent>
+                      </Dialog>
+                      :
+                      <></>
+                  }
                 </div>
                 <div className='flex'>
                   <p className='w-44'>Category: </p>
                   <p>{project.projectDetails?.category}</p>
                 </div>
-                {/* <div className='flex'>
-                  <p className='w-44'>Status: </p>
-                  <Badge>{project.projectDetails.status}</Badge>
-                </div> */}
               </div>
               <section>
                 <p className='py-5 border-b text-lg -tracking-wider'>Tasks</p>
                 <div className="lg:flex md: flex gap-4 justify-between py-5">
-                  <TaskList status="to_do" title="To Do" />
-                  <TaskList status="in_progress" title="In Progress" />
-                  <TaskList status="done" title="Done" />
+                  <TaskList status="to_do" title="To Do" isCreator={isCreator} />
+                  <TaskList status="in_progress" title="In Progress" isCreator={isCreator} />
+                  <TaskList status="done" title="Done" isCreator={isCreator} />
                 </div>
               </section>
             </div>

@@ -10,7 +10,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { store } from '@/Redux/Store'
 import { deleteTask } from '@/Redux/taskApi/Action'
 
-const TaskCard = ({ projectId, task }) => {
+const TaskCard = ({ projectId, task, isCreator }) => {
+    const { project } = useSelector(store => store);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -32,15 +33,21 @@ const TaskCard = ({ projectId, task }) => {
                         <DropdownMenuContent>
                             <DropdownMenuItem>In Progress</DropdownMenuItem>
                             <DropdownMenuItem>Done</DropdownMenuItem>
-                            <DropdownMenuItem>Edit</DropdownMenuItem>
-                            <DropdownMenuItem onClick={onTaskDelete}>Delete</DropdownMenuItem>
+                            {
+                                isCreator ?
+                                    <>
+                                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                                        <DropdownMenuItem onClick={onTaskDelete}>Delete</DropdownMenuItem>
+                                    </>
+                                    : <></>
+                            }
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
             </CardHeader>
             <CardContent className="py-0">
                 <div className='flex items-center justify-between'>
-                    <p>Count - {2}</p>
+                    <p>Count - {project.projectDetails?.team.length}</p>
                     <DropdownMenu className="w-[30rem]">
                         <DropdownMenuTrigger>
                             <Button size="icon" className="rounded-full text-black hover:text-gray-400">
@@ -52,7 +59,7 @@ const TaskCard = ({ projectId, task }) => {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                            <UserList taskDetails={task} />
+                            <UserList taskDetails={task} isCreator={isCreator} />
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

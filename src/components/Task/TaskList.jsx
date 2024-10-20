@@ -11,7 +11,7 @@ import { getAllTasksByProjectId } from '@/Redux/taskApi/Action'
 import { useParams } from 'react-router-dom'
 import { store } from '@/Redux/Store'
 
-const TaskList = ({ status, title }) => {
+const TaskList = ({ status, title, isCreator }) => {
     const dispatch = useDispatch();
     const { task } = useSelector(store => store);
     const { id } = useParams();
@@ -31,19 +31,24 @@ const TaskList = ({ status, title }) => {
                         <div className='space-y-2'>
                             {
                                 task.tasks.filter(task => task.status === status).map(task => (
-                                    <TaskCard key={task.id} projectId={id} task={task} />
+                                    <TaskCard key={task.id} projectId={id} task={task} isCreator={isCreator} />
                                 ))
                             }
                         </div>
                     </CardContent>
-                    <CardFooter>
-                        <DialogTrigger>
-                            <Button className="w-full flex items-center gap-2">
-                                <PlusIcon className="w-3 h-3" />
-                                <span>Add</span>
-                            </Button>
-                        </DialogTrigger>
-                    </CardFooter>
+                    {
+                        isCreator ?
+                            <CardFooter>
+                                <DialogTrigger>
+                                    <Button className="w-full flex items-center gap-2">
+                                        <PlusIcon className="w-3 h-3" />
+                                        <span>Add</span>
+                                    </Button>
+                                </DialogTrigger>
+                            </CardFooter>
+                            :
+                            <></>
+                    }
                 </Card>
                 <DialogContent>
                     <DialogHeader>
