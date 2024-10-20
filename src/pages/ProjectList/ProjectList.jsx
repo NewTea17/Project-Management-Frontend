@@ -68,7 +68,7 @@ export const tags = [
 
 const ProjectList = () => {
     const dispatch = useDispatch();
-    const { project } = useSelector(store => store);
+    const { auth, project } = useSelector(store => store);
     const [keyword, setKeyword] = useState("");
 
     const onCategoryChange = (value) => {
@@ -169,11 +169,11 @@ const ProjectList = () => {
                                 !keyword
                                     ?
                                     project.projects?.map((project, index) => (
-                                        <ProjectCard key={project.id * index} project={project} />
+                                        <ProjectCard key={project.id * index} project={project} isCreator={project.owner.id === auth.currentUser?.id}  />
                                     ))
                                     :
                                     project.searchProjects?.map(project => (
-                                        <ProjectCard key={project.id} project={project} />
+                                        <ProjectCard key={project.id} project={project} isCreator={project.owner.id === auth.currentUser?.id} />
                                     ))
                             }
                         </div>

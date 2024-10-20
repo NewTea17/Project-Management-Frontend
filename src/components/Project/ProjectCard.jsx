@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { deleteProject, getProjectById } from '@/Redux/projectApi/Action'
 
-const ProjectCard = ({ project }) => {
+const ProjectCard = ({ project, isCreator }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ const ProjectCard = ({ project }) => {
                     </div>
                     <div>
                         <p className='mb-3 text-sm text-gray-800'>
-                        {project.description}
+                            {project.description}
                         </p>
                     </div>
                     <div className='flex flex-wrap items-center'>
@@ -38,10 +38,15 @@ const ProjectCard = ({ project }) => {
                             ))
                         }
                     </div>
-                    <div>
-                        <Button size="sm" className="mr-5 mt-3">Update</Button>
-                        <Button size="sm" variant="destructive" onClick={onDelete}>Delete</Button>
-                    </div>
+                    {
+                        isCreator ?
+                            <div>
+                                <Button size="sm" className="mr-5 mt-3">Update</Button>
+                                <Button size="sm" variant="destructive" onClick={onDelete}>Delete</Button>
+                            </div>
+                            :
+                            <></>
+                    }
                 </div>
             </div>
         </Card>
