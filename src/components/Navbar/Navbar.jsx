@@ -46,7 +46,7 @@ const Navbar = () => {
                     </DropdownMenuContent>
                 </DropdownMenu>
 
-                <h3>{auth.user?.fullName}</h3>
+                <h3>{auth.user?.fullName || "None"}</h3>
             </div>
         </div>
     )

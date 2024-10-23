@@ -16,7 +16,8 @@ const SignUp = () => {
             fullName: "",
             email: "",
             password: ""
-        }
+        },
+        mode: 'onBlur',
     });
 
     const onSubmit = (data) => {
@@ -32,6 +33,7 @@ const SignUp = () => {
                     <FormField
                         name="fullName"
                         control={form.control}
+                        rules={{ required: "Full name is required" }}
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
@@ -44,6 +46,7 @@ const SignUp = () => {
                     <FormField
                         name="email"
                         control={form.control}
+                        rules={{ required: "Email is required" }}
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
@@ -56,6 +59,7 @@ const SignUp = () => {
                     <FormField
                         name="password"
                         control={form.control}
+                        rules={{ required: "Password is required" }}
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>

@@ -12,7 +12,11 @@ export const signUp = (userData) => async (dispatch) => {
             dispatch({ type: SIGNUP_SUCCESS, payload: data });
         }
     } catch (e) {
-        console.log("Sign up error: ", e.response ? e.response.data : e.message);
+        if (e.response && e.response.status === 400) {
+            alert(e.message); 
+        } else {
+            alert("An error occurred during sign up");
+        }
     }
 }
 

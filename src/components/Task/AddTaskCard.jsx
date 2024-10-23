@@ -16,7 +16,8 @@ const AddTaskCard = ({ status }) => {
     defaultValues: {
       name: "",
       description: ""
-    }
+    },
+    mode: 'onBlur',
   });
 
   const onSubmit = (data) => {
@@ -37,6 +38,7 @@ const AddTaskCard = ({ status }) => {
           <FormField
             name="name"
             control={form.control}
+            rules={{ required: "Task name is required" }}
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -49,6 +51,7 @@ const AddTaskCard = ({ status }) => {
           <FormField
             name="description"
             control={form.control}
+            rules={{ required: "Task description is required" }}
             render={({ field }) => (
               <FormItem>
                 <FormControl>

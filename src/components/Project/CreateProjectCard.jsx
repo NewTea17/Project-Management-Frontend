@@ -20,7 +20,8 @@ const CreateProjectCard = () => {
             description: "",
             category: "",
             tags: ["java", "react"]
-        }
+        },
+        mode: 'onBlur',
     });
 
     const onSubmit = (data) => {
@@ -41,6 +42,7 @@ const CreateProjectCard = () => {
                     <FormField
                         name="name"
                         control={form.control}
+                        rules={{ required: "Project name is required" }}
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
@@ -53,6 +55,7 @@ const CreateProjectCard = () => {
                     <FormField
                         name="description"
                         control={form.control}
+                        rules={{ required: "Project description is required" }}
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
@@ -65,6 +68,7 @@ const CreateProjectCard = () => {
                     <FormField
                         name="category"
                         control={form.control}
+                        rules={{ required: "Project category is required" }}
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
