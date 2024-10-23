@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
@@ -8,16 +8,24 @@ import UserList from '../User/UserList'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { store } from '@/Redux/Store'
-import { deleteTask } from '@/Redux/taskApi/Action'
+import { deleteTask, getAllTasksByProjectId, updateTaskStatus } from '@/Redux/taskApi/Action'
 
 const TaskCard = ({ projectId, task, isCreator }) => {
     const { project } = useSelector(store => store);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const onUpdateTaskStatus = (status) => {
+        dispatch(updateTaskStatus({ id: task.id, status }));
+    }
+
     const onTaskDelete = () => {
         dispatch(deleteTask(task.id));
     }
+
+    useEffect(() => {
+        dispatch(getAllTasksByProjectId(project.id));
+    }, [project])
 
     return (
         <Card className="rounded-md py-1 pb-2">
@@ -31,12 +39,11 @@ const TaskCard = ({ projectId, task, isCreator }) => {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                            <DropdownMenuItem>In Progress</DropdownMenuItem>
-                            <DropdownMenuItem>Done</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => onUpdateTaskStatus("in_progress")}>In Progress</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => onUpdateTaskStatus("done")}>Done</DropdownMenuItem>
                             {
                                 isCreator ?
                                     <>
-                                        <DropdownMenuItem>Edit</DropdownMenuItem>
                                         <DropdownMenuItem onClick={onTaskDelete}>Delete</DropdownMenuItem>
                                     </>
                                     : <></>

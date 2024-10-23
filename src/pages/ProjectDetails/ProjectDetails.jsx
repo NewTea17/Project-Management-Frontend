@@ -8,6 +8,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import InviteUserCard from '@/components/User/InviteUserCard'
 import { getProjectById } from '@/Redux/projectApi/Action'
 import { store } from '@/Redux/Store'
+import { getAllTasksByProjectId } from '@/Redux/taskApi/Action'
 import { PlusIcon } from '@radix-ui/react-icons'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -33,6 +34,12 @@ const ProjectDetail = () => {
       setIsCreator(true);
     }
   }, [project, auth])
+
+  useEffect(() => {
+    if (project.projectDetails) {
+      dispatch(getAllTasksByProjectId(project.projectDetails.id)); 
+    }
+  }, [project.projectDetails, dispatch]);
 
   return (
     <div>
