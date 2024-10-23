@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback } from '../ui/avatar';
 import { useDispatch } from 'react-redux';
 import { createComment } from '@/Redux/commentApi/Action';
 
-const CreateCommentCard = ({ taskId }) => {
+const CreateCommentCard = ({ taskId, project }) => {
     const dispatch = useDispatch();
 
     const form = useForm({
@@ -16,11 +16,15 @@ const CreateCommentCard = ({ taskId }) => {
         }
     });
 
+    console.log(project);
+
     const onSubmit = (data) => {
         dispatch(createComment({
             comment: data.content,
             taskId: taskId
         }));
+
+        data.content = ""
     }
 
     return (
@@ -35,7 +39,7 @@ const CreateCommentCard = ({ taskId }) => {
                                 <div className="flex gap-2">
                                     <div>
                                         <Avatar>
-                                            <AvatarFallback>T</AvatarFallback>
+                                            <AvatarFallback>{project.projectDetails?.owner?.fullName[0].toUpperCase()}</AvatarFallback>
                                         </Avatar>
                                     </div>
                                     <FormControl>

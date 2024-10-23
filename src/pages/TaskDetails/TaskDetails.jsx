@@ -14,7 +14,7 @@ import { useParams } from 'react-router-dom'
 
 const TaskDetails = () => {
     const dispatch = useDispatch();
-    const { task, comment } = useSelector(store => store);
+    const { project, task, comment } = useSelector(store => store);
     const { projectId, taskId } = useParams();
 
     useEffect(() => {
@@ -25,6 +25,8 @@ const TaskDetails = () => {
     const onUpdateTaskStatus = (status) => {
         dispatch(updateTaskStatus({ id: taskId, status }));
     }
+
+    console.log(project);
 
     return (
         <div className='px-20 py-5'>
@@ -56,7 +58,7 @@ const TaskDetails = () => {
 
                             </TabsContent>
                             <TabsContent value="comments">
-                                <CreateCommentCard taskId={taskId} />
+                                <CreateCommentCard taskId={taskId} project={project} />
                                 <div className='mt-8 space-y-6'>
                                     {
                                         comment.comments.map((item) => (
@@ -145,9 +147,9 @@ const TaskDetails = () => {
                                     <h3 className='w-[20rem]'>Creator</h3>
                                     <div className='flex items-center gap-3'>
                                         <Avatar>
-                                            <AvatarFallback>T</AvatarFallback>
+                                            <AvatarFallback>{project.projectDetails?.owner?.fullName[0].toUpperCase()}</AvatarFallback>
                                         </Avatar>
-                                        <h4>Test Creator User</h4>
+                                        <h4>{project.projectDetails?.owner?.fullName}</h4>
                                     </div>
                                 </div>
                             </div>
