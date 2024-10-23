@@ -1,7 +1,7 @@
 import api, { url } from "@/config/constants";
 import {
     ACCEPT_INVITATION_REQUEST, ACCEPT_INVITATION_SUCCESS, CREATE_PROJECT_REQUEST,
-    CREATE_PROJECT_SUCCESS, DELETE_PROJECT_BY_ID_REQUEST, DELETE_PROJECT_BY_ID_SUCCESS,
+    CREATE_PROJECT_SUCCESS, DELETE_FROM_PROJECT_REQUEST, DELETE_FROM_PROJECT_SUCCESS, DELETE_PROJECT_BY_ID_REQUEST, DELETE_PROJECT_BY_ID_SUCCESS,
     INVITE_TO_PROJECT_REQUEST, INVITE_TO_PROJECT_SUCCESS, PROJECT_BY_ID_REQUEST,
     PROJECT_BY_ID_SUCCESS, PROJECTS_REQUEST, PROJECTS_SUCCESS, SEARCH_PROJECTS_REQUEST,
     SEARCH_PROJECTS_SUCCESS,
@@ -47,7 +47,7 @@ export const searchProjects = (keyword) => async (dispatch) => {
 
 export const createProject = (projectData) => async (dispatch) => {
     dispatch({ type: CREATE_PROJECT_REQUEST });
-    
+
     try {
         const { data } = await api.post(`/api/projects`, projectData);
         dispatch({ type: CREATE_PROJECT_SUCCESS, project: data });
@@ -58,7 +58,7 @@ export const createProject = (projectData) => async (dispatch) => {
 
 export const updateProject = (projectData, id) => async (dispatch) => {
     dispatch({ type: UPDATE_PROJECT_REQUEST });
-    
+
     console.log("Project Data to Update:", projectData);
 
     try {
@@ -89,6 +89,20 @@ export const inviteToProject = ({ email, projectId }) => async (dispatch) => {
         });
 
         dispatch({ type: INVITE_TO_PROJECT_SUCCESS, payload: data });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export const deleteFromProject = ({ userId, projectId }) => async (dispatch) => {
+    dispatch({ type: DELETE_FROM_PROJECT_REQUEST });
+
+    try {
+        await api.delete(`/api/projects/remove`, {
+            params: { projectId, userId }
+        });
+
+        dispatch({ type: DELETE_FROM_PROJECT_SUCCESS, payload: { userId, projectId } });
     } catch (e) {
         console.log(e);
     }

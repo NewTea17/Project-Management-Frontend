@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import InviteUserCard from '@/components/User/InviteUserCard'
+import RemoveUserCard from '@/components/User/RemoveUserCard'
 import { getProjectById } from '@/Redux/projectApi/Action'
 import { store } from '@/Redux/Store'
 import { getAllTasksByProjectId } from '@/Redux/taskApi/Action'
@@ -37,7 +38,7 @@ const ProjectDetail = () => {
 
   useEffect(() => {
     if (project.projectDetails) {
-      dispatch(getAllTasksByProjectId(project.projectDetails.id)); 
+      dispatch(getAllTasksByProjectId(project.projectDetails.id));
     }
   }, [project.projectDetails, dispatch]);
 
@@ -69,22 +70,40 @@ const ProjectDetail = () => {
                   </div>
                   {
                     isCreator ?
-                      <Dialog>
-                        <DialogTrigger>
-                          <DialogClose>
-                            <Button size="sm" className="ml-6" onClick={handleProjectInvitation}>
-                              <span>invite</span>
-                              <PlusIcon className='w-3 h-3' />
-                            </Button>
-                          </DialogClose>
-                        </DialogTrigger>
-                        <DialogContent>
-                          <DialogHeader>
-                            Invite User
-                            <InviteUserCard />
-                          </DialogHeader>
-                        </DialogContent>
-                      </Dialog>
+                      <div className='flex gap-5'>
+                        <Dialog>
+                          <DialogTrigger>
+                            <DialogClose>
+                              <Button size="sm" className="ml-6" onClick={handleProjectInvitation}>
+                                <span>invite</span>
+                                <PlusIcon className='w-3 h-3' />
+                              </Button>
+                            </DialogClose>
+                          </DialogTrigger>
+                          <DialogContent>
+                            <DialogHeader>
+                              Invite User
+                              <InviteUserCard />
+                            </DialogHeader>
+                          </DialogContent>
+                        </Dialog>
+
+                        <Dialog className="mr-5">
+                          <DialogTrigger>
+                            <DialogClose>
+                              <Button size="sm" variant="destructive">
+                                <span>remove</span>
+                              </Button>
+                            </DialogClose>
+                          </DialogTrigger>
+                          <DialogContent>
+                            <DialogHeader>
+                              Remove User
+                              <RemoveUserCard />
+                            </DialogHeader>
+                          </DialogContent>
+                        </Dialog>
+                      </div>
                       :
                       <></>
                   }
