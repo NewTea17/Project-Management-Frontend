@@ -4,7 +4,9 @@ import {
     CREATE_PROJECT_SUCCESS, DELETE_PROJECT_BY_ID_REQUEST, DELETE_PROJECT_BY_ID_SUCCESS,
     INVITE_TO_PROJECT_REQUEST, INVITE_TO_PROJECT_SUCCESS, PROJECT_BY_ID_REQUEST,
     PROJECT_BY_ID_SUCCESS, PROJECTS_REQUEST, PROJECTS_SUCCESS, SEARCH_PROJECTS_REQUEST,
-    SEARCH_PROJECTS_SUCCESS
+    SEARCH_PROJECTS_SUCCESS,
+    UPDATE_PROJECT_REQUEST,
+    UPDATE_PROJECT_SUCCESS
 } from "./ActionTypes";
 
 export const getAllProjects = ({ category, tag }) => async (dispatch) => {
@@ -49,6 +51,19 @@ export const createProject = (projectData) => async (dispatch) => {
     try {
         const { data } = await api.post(`/api/projects`, projectData);
         dispatch({ type: CREATE_PROJECT_SUCCESS, project: data });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export const updateProject = (projectData, id) => async (dispatch) => {
+    dispatch({ type: UPDATE_PROJECT_REQUEST });
+    
+    console.log("Project Data to Update:", projectData);
+
+    try {
+        const { data } = await api.patch(`/api/projects/${id}`, projectData);
+        dispatch({ type: UPDATE_PROJECT_SUCCESS, project: data });
     } catch (e) {
         console.log(e);
     }

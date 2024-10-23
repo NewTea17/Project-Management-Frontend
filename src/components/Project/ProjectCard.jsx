@@ -4,16 +4,12 @@ import { DotFilledIcon } from '@radix-ui/react-icons'
 import { Button } from '../ui/button'
 import { Badge } from '../ui/badge'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { deleteProject, getProjectById } from '@/Redux/projectApi/Action'
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '../ui/dialog'
+import ConfirmDeleteProjectCard from './ConfirmDeleteProjectCard'
+import UpdateProjectDetailsCard from './UpdateProjectDetailsCard'
 
 const ProjectCard = ({ project, isCreator }) => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const onDelete = () => {
-        dispatch(deleteProject(project.id));
-    }
 
     return (
         <Card className="p-5 w-full lg:max-w-3xl">
@@ -41,8 +37,24 @@ const ProjectCard = ({ project, isCreator }) => {
                     {
                         isCreator ?
                             <div>
-                                <Button size="sm" className="mr-5 mt-3">Update</Button>
-                                <Button size="sm" variant="destructive" onClick={onDelete}>Delete</Button>
+                                <Dialog>
+                                    <DialogTrigger asChild>
+                                        <Button size="sm" className="mr-5 mt-3">Update</Button>
+                                    </DialogTrigger>
+                                    <DialogContent>
+                                        <DialogHeader>Update project details</DialogHeader>
+                                        <UpdateProjectDetailsCard project={project} />
+                                    </DialogContent>
+                                </Dialog>
+                                <Dialog>
+                                    <DialogTrigger asChild>
+                                        <Button size="sm" variant="destructive">Delete</Button>
+                                    </DialogTrigger>
+                                    <DialogContent>
+                                        <DialogHeader>Confirm deleting project</DialogHeader>
+                                        <ConfirmDeleteProjectCard project={project} />
+                                    </DialogContent>
+                                </Dialog>
                             </div>
                             :
                             <></>
