@@ -2,8 +2,10 @@ import SignIn from '@/components/Auth/SignIn';
 import SignUp from '@/components/Auth/SignUp';
 import { Button } from '@/components/ui/button';
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const AuthPage = () => {
+  const navigate = useNavigate();
   const [isSignUp, setIsSignUp] = useState(true);
 
   return (

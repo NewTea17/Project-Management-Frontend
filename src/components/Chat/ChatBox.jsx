@@ -60,7 +60,7 @@ const ChatBox = () => {
                 :
                 <div key={message} className='flex gap-2 mb-2 rounded-full justify-end'>
                   <div className='space-y-2 py-2 px-5 border rounded-se-2xl rounded-s-xl'>
-                    <h3>{message.sender?.fullName}r</h3>
+                    <h3>{message.sender?.fullName}</h3>
                     <p>{message.content}</p>
                   </div>
                   <Avatar>

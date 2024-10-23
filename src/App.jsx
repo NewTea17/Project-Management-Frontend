@@ -10,6 +10,7 @@ import { getUserProfile } from './Redux/authenticationApi/Action'
 import { store } from './Redux/Store'
 import { getAllProjects } from './Redux/projectApi/Action'
 import AcceptInvitation from './components/AcceptInvitation/AcceptInvitation'
+import ProjectList from './pages/ProjectList/ProjectList'
 
 const App = () => {
   const dispatch = useDispatch();
@@ -21,26 +22,18 @@ const App = () => {
   }, [auth.jwt]);
 
   return (
-    <div>
-      {
-        auth.user
-          ?
+    <div>    
           <div>
             <Navbar />
 
             <Routes>
               <Route path='/' element={<Home />} />
-              <Route path='/projects' element={<Home />} />
+              <Route path='/projects' element={<ProjectList />} />
               <Route path='/projects/:id' element={<ProjectDetails />} />
               <Route path='/projects/:projectId/:taskId' element={<TaskDetails />} />
               <Route path='/accept_invitation' element={<AcceptInvitation />} />
             </Routes>
           </div>
-          :
-          <div>
-              <AuthPage />
-          </div>
-      }
     </div>
   )
 }

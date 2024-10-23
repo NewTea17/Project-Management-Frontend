@@ -8,7 +8,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { getAllProjects, searchProjects } from '@/Redux/projectApi/Action'
 import { MagnifyingGlassIcon, MixerHorizontalIcon } from '@radix-ui/react-icons'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 export const tags = [
@@ -95,6 +95,10 @@ const ProjectList = () => {
         setKeyword(e.target.value);
         dispatch(searchProjects(e.target.value));
     }
+
+    useEffect(() => {
+        dispatch(getAllProjects({}));
+    }, [])
 
     return (
         <div>

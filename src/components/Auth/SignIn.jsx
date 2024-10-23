@@ -5,9 +5,11 @@ import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { useDispatch } from 'react-redux';
 import { signIn } from '@/Redux/authenticationApi/Action';
+import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
-    const dispatch = useDispatch()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const form = useForm({
         defaultValues: {
@@ -18,6 +20,7 @@ const SignIn = () => {
 
     const onSubmit = (data) => {
         dispatch(signIn(data));
+        navigate("/projects");
     }
 
     return (
